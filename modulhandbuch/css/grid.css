@@ -1,0 +1,124 @@
+/*282 Kachelgröße
+Abstand zwischen zwei Kacheln 20px
+
+< 604 			1 Kachel (302)
+>= 604 < 906	2 Kacheln: 604
+>= 906 < 1208	3 Kacheln: 906
+>= 1208 < 1510	4 Kacheln: 1208
+>= 1510 		5 Kacheln: 1510*/
+
+
+.grid-box:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden; 
+}
+
+.grid-box { 
+	margin-left: auto; 
+	margin-right: auto; 
+	margin-bottom: 40px;
+	padding-top: 100px; 
+}
+
+.box {
+	width: 282px;
+	min-height: 282px;
+	padding: 10px;
+	float: left;
+}
+
+.boxhalf {
+	min-height: 100px;
+	padding: 10px;
+	float: left;
+}
+
+.clear{
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden; 
+}
+	
+/* ----------------------------------------------------------------------------- *
+ *                         Styles der Mobilversion ()                            *
+ * ----------------------------------------------------------------------------- */
+
+	@media screen and (min-width: 302px) {
+		.grid-box { width: 302px; }
+		.mobile-1 { width: 33.333333333%; }
+		.mobile-2 { width: 50%; }
+		.mobile-3 { width: 100%; }
+	}
+	
+	@media screen and (max-width: 603px) {
+		.mobile-none { display: none; }
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                    Styles der Tabletversion (portrait)                        *
+ * ----------------------------------------------------------------------------- */
+
+	@media screen and (min-width: 604px) {
+		.grid-box { width: 604px; }
+		.tablet-ls-1 { width: 16.666666667%; }
+		.tablet-ls-2 { width: 33.333333334%; }
+		.tablet-ls-3 { width: 50.000000001%; }
+		.tablet-ls-4 { width: 66.666666668%; }
+		.tablet-ls-5 { width: 83.333333335%; }
+		.tablet-ls-6 { width: 100%; }
+	}
+	
+	@media screen and (max-width: 905px) {
+		.tablet-ls-none { display: none; }
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                   Styles der Tabletversion (landscape)                        *
+ * ----------------------------------------------------------------------------- */
+
+	@media screen and (min-width: 906px) {
+		.grid-box  { width: 906px; }
+		.tablet-1 { width: 11.111111111%; }
+		.tablet-2 { width: 22.222222222%; }
+		.tablet-3 { width: 33.333333333%; }
+		.tablet-4 { width: 44.444444444%; }
+		/*.tablet-5 { width: 55.555555555%; }*/
+		.tablet-5 { width: 50%; }
+		.tablet-6 { width: 66.666666666%; }
+		.tablet-7 { width: 77.777777777%; }
+		.tablet-8 { width: 88.888888888%; }
+		.tablet-9 { width: 100%; }
+	}
+	
+	@media screen and (max-width: 1207px) {
+		.tablet-none { display: none; }
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                          Styles für kleine Desktops                           *
+ * ----------------------------------------------------------------------------- */
+
+	@media screen and (min-width: 1208px) {
+		.grid-box  { width: 1208px; }
+		.desktop-none { display: none; }
+		.desktop-1 { width: 8.3333333333%; }
+		.desktop-2 { width: 16.666666667%; }
+		.desktop-3 { width: 25%; }
+		.desktop-4 { width: 33.333333333%; }
+		.desktop-5 { width: 41.666666667%; }
+		.desktop-6 { width: 50%; }
+		.desktop-7 { width: 58.333333333%; }
+		.desktop-8 { width: 66.666666666%; }
+		.desktop-9 { width: 75%; }
+		.desktop-10 { width: 83.333333333%; }
+		.desktop-11 { width: 91.666666666%; }
+		.desktop-12 { width: 100%; }
+	}
+
+
+

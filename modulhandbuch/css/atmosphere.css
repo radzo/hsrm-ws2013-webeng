@@ -1,0 +1,353 @@
+/* ----------------------------------------------------------------------------- * 
+ *                      Atmosphäre: Farben und Schriften                         *
+ *          Alle weiteren Styles stecken in der jeweiligen layout.css            *
+ * ----------------------------------------------------------------------------- */
+
+html    {
+    font-size: 100%;
+}
+
+body {
+    color: #FFFFFF; 
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+   	background-color: #292929;
+	font-weight: 100;
+	letter-spacing: 0.1em;
+}
+
+/* ----------------------------------------------------------------------------- * 
+ *                             Textauszeichnungen                                *
+ * ----------------------------------------------------------------------------- */
+
+	h1, h2, h3  {
+	    font-weight: normal;
+	    font-family: "Trebuchet MS",Helvetica,Arial;
+	}
+	
+	h1  {
+	    line-height: 100%;
+	   	margin-top: 7px;
+		margin-bottom: 12px;	
+	    color: #ffffff;   
+	   	font-size: 2.000em;
+		text-transform: uppercase;
+	}
+	
+	h2  {
+	    font-size: 1.375em;
+	    font-weight: normal;
+	    line-height: 100%;
+		margin-bottom: 12px;
+		margin-top: 7px;
+	}
+	
+	h3  {
+	    font-size: 1.000em;
+	    font-weight: normal;
+	}
+	
+	a {
+	    color: #FFFFFF;
+	    text-decoration: none;
+	}
+	
+	p {
+		cursor: text;
+	}
+	
+	label {
+		position: relative;
+		float: left;	
+	}
+	
+	textarea {
+		resize: none;
+		outline: none;
+	}
+	
+	input[type="text"], input[type="password"] {
+		margin: 6px 0 6px 0;
+		outline: none;
+	}
+	
+	li {
+		line-height: 25px;
+	}
+	
+	strong {
+		color: yellowgreen;
+		font-weight: normal;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                            Allgemeine Elemente                                *
+ * ----------------------------------------------------------------------------- */
+	
+	.opacity-one {
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+	
+	.yellowgreen {
+		color: yellowgreen;
+	}
+	
+	.notFound a:hover{
+		color: yellowgreen;
+	}
+	
+	.notFound i{
+		color: yellowgreen;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                 Navigation                                    *
+ * ----------------------------------------------------------------------------- */
+
+	#nav-home {
+		background-color: yellowgreen;
+	}
+	
+	nav {
+	    color: #ffffff;
+	   	background-color: rgba(25, 25, 25, 0.5);
+	}
+	
+	.button-nav {
+		background-color: yellowgreen;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Kacheln                                    *
+ * ----------------------------------------------------------------------------- */
+
+	.label {
+		background-color: rgba(25, 25, 25, 0.5);
+		color: #fff;
+	}
+
+	.inner-box {
+		background-color: #404140;
+	}
+	
+	.kachelbutton {
+		background-color: #3a3a3a;
+	}
+
+	.label-category {
+		font-size: 9px;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Icons                                      *
+ * ----------------------------------------------------------------------------- */
+
+	.awesomeIcon {
+		color: #FFFFFF;
+	}
+	
+	.iconButton {
+		background: transparent;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Profil                                     *
+ * ----------------------------------------------------------------------------- */
+
+	#profilDetails {
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+	
+	#profilHeader {
+		background: url('../img/hsrm.jpg') no-repeat;
+	}
+	
+	.selected .label{
+		background: yellowgreen;
+		color: black;
+		font-weight: 200;
+	}
+	
+	.delete-bin:hover{
+		color:red;
+	}
+	
+	.mySelect {
+		color: #333;
+		font-weight: normal;
+		font-size: 1em;
+		background: url('/modulhandbuch/img/arrow.png') no-repeat 100% 4px #fff;
+		background: url('/modulhandbuch/img/arrow.png') no-repeat 100% 0px #fff;
+	}
+	
+	.mySelect option {
+		background: #fff;
+	}
+	
+/* ----------------------------------------------------------------------------- *
+ *                                     Modul                                     *
+ * ----------------------------------------------------------------------------- */
+
+	/* ----------------------------------------------------------------------------- *
+	 *                                 Kommentare                                    *
+	 * ----------------------------------------------------------------------------- */
+	
+		.comment-box {
+			background-color: #3a3a3a;
+		}
+		
+		.boxsizingBorder {
+			font-size: 16px;
+		}
+
+/* ----------------------------------------------------------------------------- *
+ *                                   Buttons                                     *
+ * ----------------------------------------------------------------------------- */
+	.btn {	
+		color: #666666;
+		border: 1px solid #dcdcdc;
+		background: #FFFFFF;
+
+	}
+	
+	.btn:hover {
+		background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #d9d9d9), color-stop(1, #e9e9e9) );
+		background: -moz-linear-gradient( center top, #d9d9d9 5%, #e9e9e9 100% );
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                   Projekt                                     *
+ * ----------------------------------------------------------------------------- */
+
+	#projektHeader {
+		background: url('../img/hsrm.jpg') no-repeat;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                            Projekt hinzufügen                                 *
+ * ----------------------------------------------------------------------------- */
+
+	.editImage {
+		font-size: 22px !important;
+		background-color: rgba(25, 25, 25, 0.7);
+	}
+
+	.prefIcons a{
+		font-size: 15px;
+	}
+	
+	.prefIcons .fa-times-circle:hover {
+		color: red;
+	}
+
+	.prefIcons .fa-camera:hover {
+		color: yellowgreen;
+	}
+
+	.error{
+		color: red;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                               Bilder-Upload                                   *
+ * ----------------------------------------------------------------------------- */
+
+	#upload {
+		font-family: 'PT Sans Narrow', sans-serif;
+		background-color: #373a3d;
+		background-image: -webkit-linear-gradient(top, #373a3d, #313437);
+		background-image: -moz-linear-gradient(top, #373a3d, #313437);
+		background-image: linear-gradient(top, #373a3d, #313437);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+
+	#drop {
+		background-color: #2E3134;
+		font-size: 16px;
+		font-weight: bold;
+		color: #7f858a;
+		border: 20px solid rgba(0, 0, 0, 0);
+		border-image: url('../img/border-image.png') 25 repeat;
+	}
+
+	#drop a {
+		background-color: #007a96;
+		color: #fff;
+		font-size: 14px;
+	}
+
+	#drop a:hover {
+		background-color: #0986a3;
+	}
+	
+	#upload ul {
+		border-top: 1px solid #2b2e31;
+		border-bottom: 1px solid #3d4043;
+	}
+
+	#upload ul li {
+		background-color: #333639;
+		background-image: -webkit-linear-gradient(top, #333639, #303335);
+		background-image: -moz-linear-gradient(top, #333639, #303335);
+		background-image: linear-gradient(top, #333639, #303335);
+		border-top: 1px solid #3d4043;
+		border-bottom: 1px solid #2b2e31;
+	}
+
+	#upload ul li p {
+		color: #EEE;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	#upload ul li i {
+		font-weight: normal;
+		font-style: normal;
+		color: #7f7f7f;
+	}
+	
+	#upload ul li span {
+		background: url('../img/icons.png') no-repeat;
+	}
+	
+	#upload ul li.error p {
+		color: red;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                            Styles der Mobilversion                            *
+ * ----------------------------------------------------------------------------- */
+	@media only screen and (max-width: 603px) {
+		body {
+		    font-size: 0.9em;
+		}
+			
+		h1 {
+			font-size: 1em;
+		}
+		
+		.nav-collapse li {
+			background-color: #3a3a3a;
+		}
+	
+		.nav-collapse li:hover {
+			background-color: yellowgreen;
+		}
+		
+		.portfolioFilter li.current {
+			background-color: yellowgreen;
+		}
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                       Styles fuer groesser als Mobile                         *
+ * ----------------------------------------------------------------------------- */
+	@media only screen and (min-width: 604px) {
+
+		.portfolioFilter a.current {
+			background-color: yellowgreen;
+		}
+		.portfolioFilter a:hover {
+			background-color: yellowgreen;
+		}
+	}

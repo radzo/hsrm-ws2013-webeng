@@ -1,0 +1,716 @@
+/* ----------------------------------------------------------------------------- *
+ *                           Styles der Basisversion                             *
+ * ----------------------------------------------------------------------------- */
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, andere WebKit-Browser */
+	-moz-box-sizing: border-box; /* Firefox, andere Gecko-Browser */
+	box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+/* ----------------------------------------------------------------------------- *
+ *                            Styles der Mobilversion                            *
+ * ----------------------------------------------------------------------------- */
+@media only screen and (max-width: 603px) {
+	
+	#login-email-input {
+		width: 100%;
+	}
+	
+	#login-password-input {
+		width: 100%;
+	}
+
+	#loginButton {
+		float: right;
+	}
+	
+	.fullbox .two {
+		width: 282px;
+	}
+
+	.scaleAnimation {
+		-webkit-transition: height 2s ease-in-out;
+		-moz-transition: height 2s ease-in-out;
+		-o-transition: height 2s ease-in-out;
+		transition: height 2s ease-in-out;
+	}
+
+	.nav-collapse li {
+	  	display: block;
+	  	padding: 10px;
+	}
+	
+	.editable-input .boxsizingBorder {
+		width: 100%;
+	}
+}
+/* ----------------------------------------------------------------------------- *
+ *                    Styles der Tabletversion (portrait)                        *
+ * ----------------------------------------------------------------------------- */
+@media only screen and (min-width: 604px) {
+		
+	#login-email-input {
+		width: 400px;
+	}
+	
+	#login-password-input {
+		width: 400px;
+	}
+	
+	.button-group {
+		margin-left: 445px;
+	}
+	
+	#loginButton {
+		float: none;
+	}	
+	
+	.fullbox .two {
+		width: 584px;
+	}
+	
+	.scaleAnimation {
+		-webkit-transition: width 2s ease-in-out;
+		-moz-transition: width 2s ease-in-out;
+		-o-transition: width 2s ease-in-out;
+		transition: width 2s ease-in-out;
+	}
+	
+	.nav-collapse li {
+		display: inline;
+	}
+		
+	.modulDetails .cell {
+		text-align: left;
+	}
+	
+	.editable-input .boxsizingBorder {
+		width: 515px;
+	}
+	
+}
+/* ----------------------------------------------------------------------------- *
+ *                          Styles für groesser als Mobile                       *
+ * ----------------------------------------------------------------------------- */
+@media only screen and (min-width: 906px) {
+	.fullbox .two {
+		width: 433px;
+	}
+	
+	.modulDetails .cell {
+		text-align: center;
+	}
+	
+	.editable-input .boxsizingBorder {
+		width: 620px;
+	}
+}
+/* ----------------------------------------------------------------------------- *
+ *                           Styles für große Desktops                           *
+ * ----------------------------------------------------------------------------- */
+@media only screen and (min-width: 1208px) {
+	
+	.fullbox .two {
+		width: 584px;
+	}
+	
+	.editable-input .boxsizingBorder {
+		width: 720px;
+	}
+}
+
+/* ----------------------------------------------------------------------------- *
+ *                            Allgemeine Elemente                                *
+ * ----------------------------------------------------------------------------- */
+
+	img {
+		max-height: 282px;
+		z-index: 1;
+	}
+	
+	.right {
+		float: right;
+	}
+	
+	.opacity-one {
+		width: 282px;
+	}
+	
+/* ----------------------------------------------------------------------------- *
+ *                                  Navigation                                   *
+ * ----------------------------------------------------------------------------- */
+
+	#nav {
+		position: fixed;
+		width: 100%;
+		height: 52px;
+		z-index: 999 !important;
+	}
+	
+	#nav-home {
+		float: left;
+	}
+	
+	nav ul {
+		display: inline;
+		list-style: none;
+	}
+	
+	nav ul li {
+		margin: 0 2% 0 0;
+		float: right;
+	}
+	
+	.user {
+		margin-top: 15px;
+	}
+	
+/* ----------------------------------------------------------------------------- *
+ *                                     Filter                                    *
+ * ----------------------------------------------------------------------------- */
+
+	.portfolioFilter {
+		text-align: center;
+		margin-bottom: 50px;
+	}
+	
+	.portfolioFilter a {
+		padding: 10px 20px 10px 20px;
+	}
+		
+	.isotope-item {
+		z-index: 2;
+	}
+	
+	.isotope-hidden.isotope-item {
+		pointer-events: none;
+		z-index: 1;
+	}
+	.isotope, .isotope .isotope-item {
+		-webkit-transition-duration: 1s;
+		-moz-transition-duration: 1s;
+		-ms-transition-duration: 1s;
+		-o-transition-duration: 1s;
+		transition-duration: 1s;
+	}
+	
+	.isotope {
+		-webkit-transition-property: height, width;
+		-moz-transition-property: height, width;
+		-ms-transition-property: height, width;
+		-o-transition-property: height, width;
+		transition-property: height, width;
+	}
+	
+	.isotope .isotope-item {
+		-webkit-transition-property: -webkit-transform, opacity;
+		-moz-transition-property: -moz-transform, opacity;
+		-ms-transition-property: -ms-transform, opacity;
+		-o-transition-property: -o-transform, opacity;
+		transition-property: transform, opacity;
+	}
+	
+	.isotope.no-transition, .isotope.no-transition .isotope-item, .isotope .isotope-item.no-transition {
+		-webkit-transition-duration: 0s;
+		-moz-transition-duration: 0s;
+		-ms-transition-duration: 0s;
+		-o-transition-duration: 0s;
+		transition-duration: 0s;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                 Kachelmenü                                    *
+ * ----------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Kacheln                                    *
+ * ----------------------------------------------------------------------------- */
+
+	.inner-box {
+		width: 100%;
+		min-height: 282px;
+		top: 10px;
+		right: 10px;
+		bottom: 10px;
+		left: 10px;
+		padding: 20px;
+		overflow: hidden;
+	}
+	
+	.inner-boxhalf {
+		width: 100%;
+		min-height: 100px;
+		top: 10px;
+		right: 10px;
+		bottom: 10px;
+		left: 10px;
+		padding: 10px;
+	}
+	
+	.label {
+		width: 282px;
+		bottom: 0;
+		position: absolute;
+		z-index: 500;
+		padding: 5px 8px;
+		height: 38px;
+	}
+	
+	.label-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+	}
+	
+	.label-category {
+		display: block;
+	}
+	
+	.kachelhover a:hover {
+		opacity: 0.6;
+	}
+	
+	.inner-title {
+		padding: 20px 0 0 20px;
+	}
+
+	.kachelbutton {
+		min-height: 282px;
+	}
+	
+	.img-box {
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+		height: 282px;
+	}
+	
+	.fullbox .one {
+		width: 282px;
+		height: 282px;
+	}
+	
+	.fullbox {
+		padding: 0px;
+	}
+	
+	.center-35 {
+		text-align: center;
+		margin-top: 35%;
+	}
+	
+	.center-20 {
+		text-align: center;
+		padding-top: 20%;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                       Login                                   *
+ * ----------------------------------------------------------------------------- */
+
+	.inputPassword {
+		margin-right: 69px;
+		margin-top: 0.8%;	
+	}
+	
+	.inputEmail {
+		margin-top: 0.8%;
+		margin-right: 28px;
+	}
+	
+	.button-group {
+		overflow: hidden;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Profil                                     *
+ * ----------------------------------------------------------------------------- */
+
+	#profilHeader {
+		background-position: center center;
+		background-repeat: no-repeat;
+		padding: 0px;
+	}
+	
+	#profilDetails {
+		padding: 0;
+		width: 282px;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	#profilData {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+	
+	.editProfil {
+		height: 80px;
+		max-width: 200px;
+		position: absolute;
+		left: -300px;
+		top: 10px;
+	}
+	
+	.editPasswd {
+		height: 80px;
+		max-width: 200px;
+		position: absolute;
+		left: -300px;
+		top: 10px;
+	}
+	
+	.editProfil input[type="text"], input[type="password"]{
+		width: 220px;
+		margin-bottom: 15px;
+	}
+		
+	.delete-wrapper{
+		height: 40px;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		text-align: center;
+		z-index: 555;
+	}
+
+	.delete-wrapper .delete-bin{
+		position: absolute;
+		right: 5px;
+		top: 30%;
+	}
+	
+	#new-projekt-profil{
+		position: absolute;
+		bottom: -300px;
+		width: 100%;
+	}
+	
+	.mySelect::-ms-expand {
+		display: none;
+	}
+	
+	.mySelect {
+		width: 100%;
+		line-height:1.2em;
+		margin: 0 0 10px;
+		padding: 6px 0;
+		padding-left: 10px;
+		border: 0 none;
+		cursor: pointer;
+		text-indent: 0.01px;
+		text-overflow: "";
+		*background-image:none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+	}
+
+	.textDetails p {
+		word-wrap:break-word;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                     Modul                                     *
+ * ----------------------------------------------------------------------------- */
+	.modulDetails {
+		margin: 150px 0 0 0;
+	}
+	
+	.cell {
+		float: left;
+	}
+	
+	.button-nav .cell {
+		text-align: center;
+	}
+
+	/* ----------------------------------------------------------------------------- *
+	 *                                 Kommentare                                    *
+	 * ----------------------------------------------------------------------------- */
+	
+		.comment-box {
+			margin: 10px 0 10px 0;
+			padding: 15px;
+		}
+		
+		.comment {
+			padding: 0 0 30px 0;
+		}
+		
+		.comment-text {
+			width: 100%;
+		}
+		
+		#deleteComment {
+			float: right;
+		}
+		
+		#newCom {
+			overflow: hidden;
+		}
+
+		.boxsizingBorder {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			width: 100%;
+			margin-bottom: 10px;
+			min-height: 130px;
+		}
+		
+/* ----------------------------------------------------------------------------- *
+ *                                   Buttons                                     *
+ * ----------------------------------------------------------------------------- */
+	.btn {	
+		line-height: 25px;
+		min-width: 85px;
+		float: right;
+		margin: 10px 0 10px 10px;
+	}
+	
+	.btn:active {
+		position: relative;
+		top: 1px;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                    Icons                                      *
+ * ----------------------------------------------------------------------------- */
+
+	.awesomeIcon {
+		padding: 10px;
+	}
+	
+	.iconButton {
+		border: none;
+		outline: none;
+	}
+	
+	.comment-icon {
+		float: right;
+		margin-top: 6px;
+	}
+	
+	button::-moz-focus-inner {
+		border: none;
+	}
+	
+	.fa-lg {
+		padding: 0 0 10px 10px;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                                   Projekt                                     *
+ * ----------------------------------------------------------------------------- */
+
+	#projektHeader {
+		background-position: center center;
+		background-repeat: no-repeat;
+		padding: 0px;
+	}
+	
+	#changeProject input[type="text"] {
+		width: 100%;
+	}
+	
+	#changeProject textarea {
+		width: 100%;
+		height: 300px;
+	}
+	.projektCenter{
+		word-wrap: break-word;
+	}
+
+
+/* ----------------------------------------------------------------------------- *
+ *                            Projekt hinzufügen                                 *
+ * ----------------------------------------------------------------------------- */
+
+	.editImage {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 220px;
+		bottom: -170px;
+		text-align: left;
+		vertical-align: middle;
+		transition: all 0.4s ease-in;
+	}
+	
+	.prefIcons #makeTitleimage {
+		padding-right: 25px;
+	}
+	
+	.editImage:hover {
+		bottom: -100px;
+	}
+	
+	#projektDetails {
+		overflow: hidden;
+		position: relative;
+		min-height: 282px;
+		width: 100%;
+		float: left;
+	}
+	
+	#projektDetail {
+		position: relative;
+		min-height: 282px;
+		width: 100%;
+		float: left;
+	}
+	
+	.newProjektDialog {
+		position: relative;
+		min-height: 282px;
+		width: 100%;
+		float: left;
+	}
+	
+	#projektData {
+		left: 0;
+		right: 0;
+	}
+	
+	#newProjektOne {
+		left: 0;
+		right: 0;
+	}
+	
+	#newProjektTwo {
+		display:none;
+		bottom: -200%;
+		left: 0;
+   		right: 0;
+	}
+	
+	.editBeschreibung {
+		display:none;
+		bottom: -200%;
+	}
+	
+	.editBilder {
+		display:none;
+		bottom: -200%;
+	}
+	
+	.editImageUpload {
+		display:none;
+		bottom: -200%;
+	}
+		
+	#projektData .yellowgreen {
+		margin-top: 5%;
+	}
+
+/* ----------------------------------------------------------------------------- *
+ *                               Bilder-Upload                                   *
+ * ----------------------------------------------------------------------------- */
+
+	#upload {
+		width: 250px;
+		padding: 30px;
+		border-radius: 3px;
+	}
+	
+	#drop {
+		padding: 40px 50px;
+		margin-bottom: 30px;
+		border-radius: 3px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+	
+	#drop a {
+		padding: 12px 26px;
+		border-radius: 2px;
+		cursor: pointer;
+		display: inline-block;
+		margin-top: 12px;
+		line-height: 1;
+	}
+	
+	#drop input {
+		display: none;
+	}
+	
+	#upload ul {
+		list-style: none;
+		margin: 0 -30px;
+	}
+	
+	#upload ul li {
+		padding: 15px;
+		height: 52px;
+		position: relative;
+	}
+	
+	#upload ul li input {
+		display: none;
+	}
+	
+	#upload ul li p {
+		width: 144px;
+		overflow: hidden;
+		white-space: nowrap;
+		position: absolute;
+		top: 20px;
+		left: 100px;
+	}
+	
+	#upload ul li i {
+		display: block;
+	}
+	
+	#upload ul li canvas {
+		top: 15px;
+		left: 32px;
+		position: absolute;
+	}
+	
+	#upload ul li span {
+		width: 15px;
+		height: 12px;
+		position: absolute;
+		top: 34px;
+		right: 33px;
+		cursor: pointer;
+	}
+	
+	#upload ul li.working span {
+		height: 16px;
+		background-position: 0 -12px;
+	}
+	
+/* ----------------------------------------------------------------------------- *
+ *                                   Video-Box                                   *
+ * ----------------------------------------------------------------------------- */
+
+.fullbox.widescreen {
+	padding-bottom: 57.25%;
+}
+
+.fullbox.vimeo {
+	padding-top: 0;
+}
+
+.fullbox embed, .fullbox iframe, .fullbox object, .fullbox video {
+	position: absolute;
+}
+
+/* ----------------------------------------------------------------------------- *
+ *                               404 Not Found                                   *
+ * ----------------------------------------------------------------------------- */
+
+.notFound {
+	text-align: center;
+}
+
+

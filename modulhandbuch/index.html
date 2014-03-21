@@ -1,0 +1,757 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		
+		<title>Modules</title>
+		
+		<link href="/modulhandbuch/css/normalize.css" rel="stylesheet">
+		<!-- Zum editieren von Kommentaren -->
+		<link href="/modulhandbuch/css/jquery-editable.css" rel="stylesheet">
+		<!-- Responsive Grid -->
+		<link href="/modulhandbuch/css/grid.css" rel="stylesheet"/>
+		<!-- Farben und Schriften -->
+		<link href="/modulhandbuch/css/atmosphere.css" rel="stylesheet">
+		<!-- Responsive Navigation fuer Mobile -->
+		<link href="/modulhandbuch/css/responsive-nav.css" rel="stylesheet">
+		<link href="/modulhandbuch/css/layout.css" rel="stylesheet">
+		<!-- Autovervollstaendigung fuer Textfelder (Auswahl Studenten) -->
+		<link href="/modulhandbuch/css/autocomplete.css" rel="stylesheet">
+		<!-- LightBox fuer Bilder -->
+		<link href="/modulhandbuch/css/colorbox.css" rel="stylesheet">
+		<!-- Zum hochladen von Bildern -->
+		<link href="/modulhandbuch/css/jquery.file.upload.css" rel="stylesheet">
+		<!-- Fuer die Icons -->
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+	</head>
+
+	<body>
+		<header id="headerNav">
+
+		</header>
+
+		<div id="container" class="main">
+			<div class="grid-box">
+				<div class="portfolioFilter" id="portfolioFilter">
+
+				</div>
+				<section id="content" class="grid-row">
+
+				</section>
+			</div>
+		</div>
+
+
+		
+		<!-- Modulübersicht -->
+		<script type="text/template" id="tpl-modul-list-item">
+			<div class="kachelhover">
+				<div class="img-box">
+					<a href='module/<%= modulnummer %>'>
+						<% if(bild != ''){   %>
+							<img src="<%= bild %>" />
+						<% }else{ %>
+							<img src="/modulhandbuch/img/placeholder.png" />
+						<% } %>
+						<div class="label">
+							<div class="label-title">
+								<%= bezeichnung %>
+							</div>
+							<span class="label-category">
+								<% if(liste != '-'){   %>
+									<%- liste%>
+								<% }else{ %>
+									<%- zeit%>
+								<% } %>
+							</span>
+						</div>
+					</a>
+				</div>
+			</div>
+		</script>
+		
+		<!-- Navigation -->
+		<script type="text/template" id="tpl-nav">
+			<nav id="nav" role="navigation">
+				<a href="/modulhandbuch/module" id="nav-home"><i class="fa fa-home fa-2x awesomeIcon"></i></a>
+				<ul id="navmenu">
+					<% if(logged_in) { %>
+						<li><a href="/modulhandbuch/logout" id="nav-logout"><i class="fa fa-lock fa-2x awesomeIcon"></i></a></li>
+						<li><a href="/modulhandbuch/profil" id="nav-profil"><i class="fa fa-user fa-2x awesomeIcon"></i></a></li>
+						<li class="user">Hallo <%-user.vorname %> <%-user.nachname %>!</li>
+					<% }else{ %>
+						<li><a href="/modulhandbuch/login" id="nav-login"><i class="fa fa-unlock fa-2x awesomeIcon"></i></a></li>
+						<li><a href="/modulhandbuch/profil" id="nav-profil"><i class="fa fa-user fa-2x awesomeIcon"></i></a></li>
+					<% } %>
+				</ul>
+			</nav>
+		</script>
+		<!-- Navigation -->
+		<script type="text/template" id="tpl-filtering">
+			<div class="nav-collapse">
+				<ul>
+					<li>
+						<a href="#module" class="current" data-filter="*">Alle</a>
+					</li>
+					<li>
+						<a href="#module" data-filter=".sommersemester">Sommersemester</a>
+					</li>
+					<li>
+						<a href="#module" data-filter=".wintersemester">Wintersemester</a>
+					</li>
+					<li>
+						<a href="#module" data-filter=".liste">Wahlf&auml;cher</a>
+					</li>
+				</ul>
+			</div>
+		</script>
+
+		<!-- Kommentare -->
+		<script type="text/template" id="tpl-kommentare">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+				<div class="box desktop-2 tablet-1 tablet-ls-none mobile-none fullbox">
+				</div>
+				<div class="box desktop-8 tablet-7 tablet-ls-6 mobile-3 fullbox">
+					<div class="inner-box">
+						<h1>Kommentare</h1>
+						<% if(kommentare !=''){ %>
+							<% _.each(kommentare, function(kommentar){ %>
+								<div class="comment-box">
+									<div class="comment">
+										<p><strong><%= _.escape(kommentar.vorname) %> <%= _.escape(kommentar.nachname) %></strong>  
+											<% if(kommentar.last_modifyDate){ %>
+												editierte am
+												<%= kommentar.last_modifyDate %>
+											<% }else{ %>
+												sagte am
+												<%= kommentar.commentDate %>
+											<% } %>
+											um
+											<% if(kommentar.last_modifyTime){ %>
+												<%= kommentar.last_modifyTime %>
+											<% }else{ %>
+												<%= kommentar.commentTime %>
+											<% } %>
+										 :</p>
+										<div class="comment-text">
+											<a class="iconButton" href="module/<%= _.escape(kommentar.modulnummer) %>" id="editKommentar"  data-type="textarea" data-pk="<%= _.escape(kommentar.id) %>" data-title="Kommentar bearbeiten">
+												<p><%- _.escape(kommentar.text) %></p>
+												<i class="fa fa-pencil-square-o fa-lg awesomeIcon comment-icon"></i>
+											</a>
+										</div>
+										<button class="iconButton" id="deleteComment" type="submit" data-pk="<%= _.escape(kommentar.id) %>">
+											<i class="fa fa-trash-o fa-lg awesomeIcon"></i>
+										</button>
+									</div>
+								</div>
+							<% }); %>
+						<% } %>
+						<% if(message !=''){ %>
+							<p><%-message %></p>
+						<% } %>
+						<!-- Neues Kommentar -->
+						<div>
+							<form id="newCom">
+								<h3>Neues Kommentar</h3>
+								<textarea class="boxsizingBorder" id="user_comment" ></textarea>
+								<button class="btn" id="newcomment">Senden</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		<div class="clear"></div>
+		</script>
+
+		<!-- Moduldetails -->
+		<script type="text/template" id="modul-details">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+				<div class="inner-box">
+					<h1><%-bezeichnung%></h1>
+					<div class="modulDetails">
+						<div class="desktop-4 tablet-3 tablet-ls-6 mobile-3 cell">
+							<span class="yellowgreen">Semester: </span>
+							<%-semester%>
+						</div>
+						<div class="desktop-4 tablet-3 tablet-ls-6 mobile-3 cell">
+							<span class="yellowgreen">Credits: </span>
+							<%-credits %>
+						</div>
+						<div class="desktop-4 tablet-3 tablet-ls-6 mobile-3 cell">
+							<span class="yellowgreen">Dozenten: </span>
+							<% dozent = _.toArray(dozent)  %>
+							<% _.each(_.initial((dozent)), function(dozent, index){ %>
+							<%= _.escape(dozent.name) %>,
+							<% }); %>
+							<%- _.last(dozent).name %>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="boxhalf desktop-12 tablet-9 tablet-ls-6 mobile-3">
+						<div class="inner-boxhalf button-nav">
+						<div class="desktop-4 tablet-3 tablet-ls-2 mobile-1 cell"><button class="iconButton" id="details"><i class="fa fa-info-circle fa-4x awesomeIcon"></i></button></div>
+						<div class="desktop-4 tablet-3 tablet-ls-2 mobile-1 cell"><button class="iconButton" id="kommentare"><i class="fa fa-comment fa-4x awesomeIcon"></i></button></div>
+						<div class="desktop-4 tablet-3 tablet-ls-2 mobile-1 cell"><button class="iconButton" id="projekte"><i class="fa fa-folder-open fa-4x awesomeIcon"></i></button></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="row">
+					<div id="modulContent" class="modulContent">
+		
+					</div>
+				</div>
+		</script>
+
+		<!-- Projekte eines Moduls-->
+		<script type="text/template" id="tpl-modul-projekte">
+			<% if (projekte) { %>
+				<p>
+				<% _.each(projekte, function(projekte){ %>
+				<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+				<section class="projektItem">
+					<div class="kachelhover">
+						<div class=" img-box">
+						<a href='/modulhandbuch/module/<%-projekte.modulnummer%>/projekte/<%-projekte.bid%>'>
+								<% if(projekte.titelbild !='/modulhandbuch/img/placeholder.png'){ %>
+									<img src="/modulhandbuch/api/uploads/thumbs/<%-projekte.bilddir %>/thumb-<%-projekte.titelbild %>" />
+								<% }else{ %>
+									<img src="/modulhandbuch/img/placeholder.png" />
+								<% } %>
+								<div class="label" >
+									<div class="label-title">
+										<%= _.escape(projekte.name) %>
+									</div>
+									<span class="label-category">
+										Semester <%= _.escape(semester) %>
+									</span>
+								</div>
+							</a>
+						</div>
+					</div>
+				</section>
+				</div>
+				<% }); %>
+			<% } %>
+			<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+				<a href="/modulhandbuch/module/<%-modulnummer%>/neues-projekt" id="newproject">
+					<div class="inner-box center-20">
+						<i class="fa fa-plus fa-4x awesomeIcon"></i>
+						<h1>Projekt hinzuf&uuml;gen</h1>
+					</div>
+				</a>
+			</div>
+		</script>
+
+		<!-- Studenten-Portfolio -->
+		<script type="text/template" id="tpl-portfolio-projekte">
+			<div class="inner-title">
+				<h1><%-user.vorname%> <%-user.nachname %>'s Projekte</h1>
+			</div>
+			<% if (projekt.projekte) { %>
+				<p>
+				<% _.each(projekt.projekte, function(projekte){ %>
+					<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+						<section class="projektItem">
+							<div class="kachelhover">
+								<a href='/modulhandbuch/module/<%-projekte.modulnummer%>/projekte/<%-projekte.bid%>'>
+									<div class=" img-box">
+										<% if(projekte.titelbild !='../img/placeholder.png'){ %>
+											<img src="/modulhandbuch/api/uploads/thumbs/<%-projekte.bilddir %>/thumb-<%-projekte.titelbild %>" />
+										<% }else{ %>
+											<img src="/modulhandbuch/img/placeholder.png" />
+										<% } %>
+										<div class="label" >
+											<div class="label-title">
+												<%= _.escape(projekte.name) %>
+											</div>
+											<span class="label-category">
+												Semster <%= _.escape(projekte.semester) %>
+											</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</section>
+					</div>
+				<% }); %>
+			<% } %>
+		</script>
+
+		<!-- Projektdetails -->
+		<script type="text/template" id="projekt-details">
+			<div class="projekt">
+				<!-- Projekt-Header -->
+				<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+					<div class="inner-box" id="projektHeader">
+						<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3 opacity-one">
+							<div class="projektCenter">
+								<div class="center-35">
+									<h1><%-projekt.name%></h1>
+									<% if(edit_allowed){ %>
+									<button class="iconButton" id="beschreibungEdit"><i class="fa fa-info-circle fa-2x awesomeIcon"></i></button>
+									<button class="iconButton" id="bilderEdit"><i class="fa fa-camera fa-2x awesomeIcon"></i></button>
+									<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Projekt-Content -->
+				<div id="projektDetail">
+					<div id="projektData">
+						<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+							<div class="inner-box">
+								<h1>Beschreibung</h1>
+								<p><%= projekt.beschreibung %></p>
+								<% if(projekt.studenten) { %>
+									<div class="yellowgreen">Studenten: </div>
+									<% _.each(projekt.studenten, function(studenten){ %>
+										<%= _.escape(studenten.vorname) %> <%= _.escape(studenten.nachname) %>
+									<% }); %>
+								<% } %>
+							</div>
+						</div>
+						<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+							<div class="inner-box fullbox">
+								<% if(projekt.videourl == 'invalidURL'){ %>
+									<img src="/modulhandbuch/img/placeholder.png" />
+								<% }else{ %>
+									<iframe class="one" src="<%-projekt.videourl %>?wmode=transparent&amp;rel=0&amp;showinfo=0" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
+								<% } %>
+							</div>
+						</div>
+						<% if(projekt.images) { %>
+							<% _.each(projekt.images, function(image){ %>	
+								<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+									<a href="/modulhandbuch/api/uploads/<%= projekt.bilddir %>/<%= image %>" class="gallery" id="show_pic">
+										<img src="/modulhandbuch/api/uploads/thumbs/<%= projekt.bilddir %>/thumb-<%= image %>" />
+									</a>
+								</div>
+							<% }); %>
+						<% } else{ %>
+							<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+								<div class="inner-box fullbox">
+									<img src="/modulhandbuch/img/placeholder.png" />
+								</div>
+							</div>
+						<% } %>
+						<div class="box desktop-none tablet-none tablet-ls-none mobile-3">
+							<button class="btn" id="scroll_to_top"><i class="fa fa-angle-double-up"></i></button>
+						</div>
+					</div>
+					<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3 editBeschreibung" id="animateBeschreibung">
+						<div class="inner-box">
+							<h1>Projekt bearbeiten (1)</h1>
+							<form id="changeProject">
+								<p>Gib Deinem Projekt einen Namen:</p>
+								<input type="text" name="name" value="<%-projekt.name %>" />
+	
+								<p>Beschreibe Dein Projekt:</p>
+								<textarea id="beschreibung" name="beschreibung" ><%- projekt.beschreibung %></textarea>
+								<p>Wer hat noch an diesem Projekt teilgenommen:</p>
+								<div id="students">
+									<input id="names" type="text">
+								</div>
+								<p>Lade Dein Projektvideo von YouTube/Vimeo hoch:</p>
+								<input type="text" name="videourl" value="<%-projekt.videourl %>" />
+								<div class="clear"></div>
+								<button class="btn" id="projekt-edit-save">Speichern</button>
+								<button class="btn" id="projekt-cancel-save">Abbrechen</button>
+							</form>
+						</div>
+					</div>
+					<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3 editBilder" id="animateBilder">
+						<div class="inner-box fullbox">
+							<div class="projektEditWrapper">
+								<div class="inner-title">
+									<h1>Projektbilder bearbeiten (2)</h1>
+								</div>
+								<% if(projekt.images) { %>
+									<% _.each(projekt.images, function(image){ %>
+										<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+											<div class=" img-box">
+												<div class="editImage">
+													<span class="pref fa fa-pencil-square-o fa-lg" style="padding-left: 45%; padding-top: 5%;"></span>
+													<div class="clear"></div>
+													<div class="prefIcons" style="padding-left: 10%; padding-top: 8%; padding-bottom: 10%; margin-top: 2%; background-color: rgba(25, 25, 25, 0.4);">
+														<a id="makeTitleimage"  data-name="<%= image %>" data-src="<%= projekt.bilddir %>" href="#">
+															<span class="fa fa-camera fa-2x"></span>
+															Titelbild
+														</a>
+														<a id="deleteImage"  data-name="<%= image %>" data-name="<%= image %>" data-src="<%= projekt.bilddir %>" href="#">
+															<span class="fa fa-times-circle fa-2x"></span>
+															l&ouml;schen
+														</a>
+														</br>
+													</div>
+												</div>
+												<img src="/modulhandbuch/api/uploads/thumbs/<%= projekt.bilddir %>/thumb-<%= image %>" />
+											</div>
+										</div>
+									<% }); %>
+								<% } else{ %>
+									<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+										<div class="inner-box fullbox">
+											<img src="<%-projekt.titelbild %>" />
+										</div>
+									</div>
+								<% } %>
+								<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+									<div class="kachelbutton">
+										<a id="addImages" href="#module/<%-projekt.modulnummer %>/projekte/<%-projekt.bid %>">
+											<div class="center-20">
+												<i class="fa fa-plus fa-5x awesomeIcon"></i></br>
+												Bild hinzuf&uuml;gen
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+									<div class="kachelbutton">
+										<a id="projekt-cancel-save" href="#module/<%-projekt.modulnummer %>/projekte/<%-projekt.bid %>">
+											<div class="center-20">
+												<i class="fa fa-times-circle fa-5x awesomeIcon"></i></br>
+												Abbrechen
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3 editImageUpload" id="animateImageUpload">
+						<div class="inner-box">
+							<div class="projektEditWrapper">
+								<h1>Bilder zu dem Projekt hinzuf&uuml;gen (2)</h1>
+								<p>Bitte nur folgende Formate hochladen ( .jpg .png .gif )</p>
+								<form action="/modulhandbuch/api/projekt/<%-projekt.bid %>/<%-projekt.modulnummer %>" id="upload_form" enctype="multipart/form-data">
+									<div class="input_wrapper">
+										<div class="drop_zone">
+											<div class="drop_wrapper">
+												<a>Dateien ausw&auml;hlen</a>
+												<div class="">Dateien hierher ziehen</div>
+												<input type="file" name="upl" multiple />
+											</div>
+										</div>
+									</div>
+								</form>
+								<ul class="files_list">
+									<!-- Hier werden die hochgeladenen Dateien angezeigt -->
+								</ul>
+								<button id="newprojekt-finish" class="btn btn-projekt-finish" data-dismiss="modal" aria-hidden="true">Fertig</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<!-- Studenten-Profil -->
+		<script type="text/template" id="student-template">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+				<div class="inner-box" id="profilHeader">
+					<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3" id ="profilDetails">
+						<div id="profilData" class="center-20">
+							<div class="textDetails">
+								<h1><%-model.vorname %> <%-model.nachname %></h1>
+								<p><%-model.email %></p>
+								<button class="iconButton" id="passwdEdit"><i class="fa fa fa-key fa-3x awesomeIcon"></i></button>
+								<button class="iconButton" id="profilEditButton"><i class="fa fa-pencil-square-o fa-3x awesomeIcon"></i></button>
+							</div>
+						</div>
+						<div id="animateEdit" class="editProfil">
+							<form id="editData">
+								<table>
+									<tr>
+										<td><label>Vorname:</label></label><input name="vorname" value="<%-model.vorname %>" type="text"class="Feld"maxlength="30"></td>
+									</tr>
+									<tr>
+										<td><label>Nachname:</label><input name="nachname" value="<%-model.nachname %>" type="text" class="Feld" maxlength="40"></td>
+									</tr>
+									<tr>
+										<td><label>Email:</label><input name="email" value="<%-model.email %>" type="text" class="Feld" maxlength="40"></td>
+									</tr>
+									<tr>
+										<td>
+										<button class="iconButton" id="profilCancelButton"><i class="fa fa-times-circle fa-2x awesomeIcon"></i></button>
+										<button class="iconButton right" id="profilSaveButton"><i class="fa fa-check fa-2x awesomeIcon"></i></button>
+									</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+						<div id="animatePass" class="editPasswd">
+							<form id="editPass">
+								<table>
+									<tr>
+										<td><label>Neues Passwort:</label></label><input id="newPW" name="passwortNeu" type="password"class="Feld"maxlength="30"></td>
+									</tr>
+									<tr>
+										<td><label>Passwort wiederholen:</label><input id="oldPW" name="nachname" type="password" class="Feld" maxlength="40"></td>
+									</tr>
+									<tr>
+										<td><label>altes Passwort:</label><input name="email" type="password" class="Feld" maxlength="40"></td>
+									</tr>
+									<tr>
+										<td>
+											<button class="iconButton" id="profilCancelButton"><i class="fa fa-times-circle fa-2x awesomeIcon"></i></button>
+											<button class="iconButton right" id="pwSaveButton"><i class="fa fa-check fa-2x awesomeIcon"></i></button>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+				<a href="#" id="createPortfolio">
+					<div class="inner-box center-20">
+						<i class="fa fa-archive fa-4x awesomeIcon"></i>
+						<h1>Portfolio erstellen</h1>
+					</div>
+				</a>
+			</div>
+			<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+				<div class="img-box">
+					<a id="projekt-modul-choise" href="#">
+						<div class="inner-box center-20">
+							<i class="fa fa-plus fa-4x awesomeIcon"></i>
+							<h1>Projekt hinzuf&uuml;gen</h1>
+						</div>
+					</a>
+					<div id="new-projekt-profil">
+						<div class="inner-box center-20">
+							<% if(model.modulnamen) { %>
+								<select id="mySelect" class="mySelect">
+									<% _.each(model.modulnamen, function(module){ %>
+									  <option value="<%= _.escape(module.modulnummer) %>"><%= _.escape(module.bezeichnung) %></option>
+									 <% }); %>
+								</select>
+							<% } %>
+							<a id="projekt-modul-new" href="#">
+							<i class="fa fa-plus fa-4x awesomeIcon"></i>
+							<h1>Projekt erstellen</h1>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<% if (projekte) { %>
+				<% _.each(projekte, function(projekte){ %>
+					<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+						<div class="kachelhover">
+							<a class="portItemSelect" name="<%-projekte.bid %>" href="/modulhandbuch/module/<%-projekte.modulnummer%>/projekte/<%-projekte.bid%>" >
+								<div class=" img-box">
+									<% if(projekte.titelbild !='../img/placeholder.png'){ %>
+										<img src="/modulhandbuch/api/uploads/thumbs/<%-projekte.bilddir %>/thumb-<%-projekte.titelbild %>" />
+									<% }else{ %>
+										<img src="/modulhandbuch/img/placeholder.png" />
+									<% } %>
+									<div class="label" >
+										<div class="label-title">
+											<%= _.escape(projekte.name) %>
+										</div>
+										<span class="label-category">
+											Semester <%= _.escape(projekte.semester) %>
+										</span>
+									</div>
+									<div class="delete-wrapper">
+										<a id="delete-projekt" href="#" value="<%-projekte.bid %>">
+											<i class="delete-bin fa fa-trash-o fa-lg awesomeIcon"></i>
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				<% }); %>
+			<% } %>
+			<div id="portfolioItems" class="portfolio">
+
+			</div>
+		</script>
+
+		<!-- Modul-Inhalte -->
+		<script type="text/template" id="tpl-information">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+				<div class="inner-box">
+					<% if (inhalte) { %>
+						<h2>Inhalte</h2>
+						<ul>
+							<% _.each(inhalte, function(inhalt){ %>
+								<% if(inhalte != ''){ %>
+									<li><%- inhalt %></li>
+								<% } %>
+							<% }); %>
+						</ul>
+					<% } %>
+				</div>
+			</div>
+		</script>
+
+		<!-- Portfolio generieren-->
+		<script type="text/template" id="portfolio-content">
+			<div class="box desktop-3 tablet-3 tablet-ls-3 mobile-3">
+				<a id="generatePortfolio" href="#">
+					<div class="inner-box center-20">
+						<i class="fa fa-archive fa-4x awesomeIcon"></i>
+						<h1>Portfolio generieren</h1>
+					</div>
+				</a>
+			</div>
+		</script>
+
+		<!-- Projekt einstellen / bearbeiten -->
+		<script type="text/template" id="projekt-dialog">
+			<div class="newProjektDialog">
+				<div id="newProjektOne">
+					<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+						<div class="inner-box">
+						<h1>Neues Projekt hinzuf&uuml;gen (1)</h1>
+							<form id="changeProject">
+								<p id="error-name" >Gib Deinem Projekt einen Namen:</p>
+								<input type="text" name="name" placeholder="<%-name %>" />
+					
+								<p id="error-beschreibung">Beschreibe Dein Projekt:</p>
+								<textarea id="beschreibung" name="beschreibung" placeholder="<%-beschreibung %>" />
+					
+								<p>Wer hat noch an diesem Projekt teilgenommen:</p>
+								<div id="students">
+									<input id="names" type="text">
+								</div>
+									
+								<p>Lade Dein Projektvideo von YouTube/Vimeo hoch:</p>
+								<input type="text" name="videourl" placeholder="<%-videourl %>" />
+								
+								<div class="clear"></div>
+								<button id="projekt-new" class="btn">Weiter</button>
+								<button id="projekt-cancel" class="btn close-action" data-dismiss="modal" aria-hidden="true">Abbrechen</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="newProjektTwo">
+					<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3">
+						<div class="inner-box">
+							<div class="projektEditWrapper">
+								<h1>Bilder zu dem Projekt hinzuf&uuml;gen (2)</h1>
+								<p>Bitte nur folgende Formate hochladen ( .jpg .png .gif )</p>
+								<form action="/modulhandbuch/api/projekt/<%-bid %>/<%-modulnummer %>" id="upload_form" enctype="multipart/form-data">
+									<div id="input_wrapper" class="input_wrapper">
+										<div class="file_upload_panel">
+											<div class="drop_zone">
+												<div class="drop_wrapper">
+													<a>Dateien ausw&auml;hlen</a>
+													<div class="">Dateien hierher ziehen</div>
+													<input type="file" name="upl" multiple />
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+								<ul class="files_list">
+									<!-- Die hochgeladenen Dateien werden hier angezeigt -->
+								</ul>
+								<button id="newprojekt-finish" class="btn btn-projekt-finish" data-dismiss="modal" aria-hidden="true">Fertig</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<!-- Login -->
+		<script type="text/template" id="login">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3" >
+				<div class="inner-box">
+					<h1><i class="fa fa-lock awesomeIcon"></i>Login</h1>
+					<div id="login-alert" class="alert alert-error">
+					</div>
+					<form id="login-form">
+						<div class="login-email">
+							<label class="inputEmail" for="inputEmail">Benutzername</label>
+							<input type="text" id="login-email-input" placeholder="Email">
+						</div>
+						<div class="login-password">
+							<label class="inputPassword" for="inputPassword">Passwort</label>
+							<input type="password" id="login-password-input" placeholder="Passwort">
+						</div>
+						<div class="button-group">
+							<button type="submit" class="btn" id="loginButton">Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</script>
+		
+		<!-- notFound -->
+		<script type="text/template" id="tpl-not-found">
+			<div class="box desktop-12 tablet-9 tablet-ls-6 mobile-3" >
+				<div class="inner-box notFound">
+					<h1><i class="fa fa-frown-o awesomeIcon"></i>404 Not found</h1>
+					<a href="http://m5.mi.hs-rm.de/modulhandbuch/module">zur&uuml;ck zur Homepage</a>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<!-- jQuery Library wird geladen -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script>
+			if (!window.jQuery) {
+				document.write('<script src="/modulhandbuch/lib/jquery-1-10-2.min.js"><\/script>');
+			}
+		</script>
+		
+		<!-- Backbone Dependencies -->
+		<script src="/modulhandbuch/lib/underscore-min.js"></script>
+		<script src="/modulhandbuch/lib/backbone-min.js"></script>
+		<script src="/modulhandbuch/js/lib/jquery.knob.js"></script>
+
+		<!-- jQuery File Upload Dependencies -->
+		<script src="/modulhandbuch/js/lib/jquery.ui.widget.js"></script>
+		
+		<!-- jQuery Plugin Portfolio -->
+		<script src="/modulhandbuch/js/lib/jquery.iframe-transport.js"></script>
+		<script src="/modulhandbuch/js/lib/jquery.fileupload.js"></script>
+		<script src="/modulhandbuch/js/lib/jquery.file.upload-script.js"></script>
+		
+		<!-- jQuery Plugin Lightbox fuer Bilder -->
+		<script src="/modulhandbuch/js/lib/jquery.colorbox.js"></script>
+
+		<!-- jQuery Plugin Kommentare in-place editieren -->
+		<script src="/modulhandbuch/js/lib/jquery-editable-poshytip.js"></script>
+
+		<!-- jQuery Plugin Portfolio -->
+		<script src="/modulhandbuch/js/lib/jquery.isotope.js"></script>
+		
+		<!-- jQuery Plugin Responsive Navigation -->
+		<script src="/modulhandbuch/js/lib/responsive-nav.js"></script>
+		
+		<!-- jQuery Plugin Autocomplete Studenten hinzufuegen bei Projekterstellung  -->
+		<script src="/modulhandbuch/js/lib/jquery-ui-1.10.4.custom.js"></script>
+
+		<!-- Backbone Model, View, Helper -->
+		<script src="/modulhandbuch/js/utils.js"></script>
+		<script src="/modulhandbuch/js/models/sessionModel.js"></script>
+		<script src="/modulhandbuch/js/models/projektModel.js"></script>
+		<script src="/modulhandbuch/js/models/studentModel.js"></script>
+		<script src="/modulhandbuch/js/models/kommentarModel.js"></script>
+		<script src="/modulhandbuch/js/models/modulmodel.js"></script>
+		<script src="/modulhandbuch/js/views/notFoundView.js"></script>
+		<script src="/modulhandbuch/js/views/navView.js"></script>
+		<script src="/modulhandbuch/js/views/loginView.js"></script>
+		<script src="/modulhandbuch/js/views/projektView.js"></script>
+		<script src="/modulhandbuch/js/views/portfolioView.js"></script>
+		<script src="/modulhandbuch/js/views/navView.js"></script>
+		<script src="/modulhandbuch/js/views/modulview.js"></script>
+		<script src="/modulhandbuch/js/views/studentView.js"></script>
+		
+		<!-- Backbone Main File -->
+		<script src="/modulhandbuch/js/main.js"></script>
+	</body>
+
+</html>
